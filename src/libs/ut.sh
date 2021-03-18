@@ -92,6 +92,7 @@ __ut_run() {
     [ -z "$tcs" ] && tcs=$(ut_all)
 
     for tc in $tcs; do
+        echo "test $tc"
         $tc
     done
 }
