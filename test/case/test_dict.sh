@@ -20,5 +20,7 @@ test_dict() {
     ut_assert_eq "1 4 a" "$(array_all a2)"
 
     local b=$(dict_get dict repo)
-    ut_assert_eq "1 2 3" "$(array_all $b)"
+    ut_assert_eq "1 2 3" "$(array_all "$b")"
+    dict_remove dict key2
+    ut_assert_eq "" "$(dict_get dict key2)"
 }

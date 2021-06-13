@@ -22,20 +22,20 @@ __log() {
     local funcname="TRACE: ${FUNCNAME[*]}"
 
     # print log
-    case $level in
-        $LD_DEBUG)
-            color_print $CLR_GREEN "$format"
+    case "$level" in
+        "$LD_DEBUG")
+            color_print "$CLR_GREEN" "$format"
             ;;
-        $LD_WARN)
-            color_print $CLR_YELLOW "$format"
+        "$LD_WARN")
+            color_print "$CLR_YELLOW" "$format"
             ;;
-        $LD_ERROR)
-            color_print $CLR_RED "$format"
-            color_print $CLR_RED "$funcname"
+        "$LD_ERROR")
+            color_print "$CLR_RED" "$format"
+            color_print "$CLR_RED" "$funcname"
             ;;
-        $LD_FATAL)
-            color_print $CLR_RED_WHITE "$format"
-            color_print $CLR_RED_WHITE "$funcname"
+        "$LD_FATAL")
+            color_print "$CLR_RED_WHITE" "$format"
+            color_print "$CLR_RED_WHITE" "$funcname"
             ;;
         *)
             color_print "" "$format"

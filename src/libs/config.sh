@@ -18,6 +18,6 @@ config_get() {
     local key=$3
     local value=$(awk -F '=' \
         '/\['$section'\]/{a=1} (a==1 && $1~/'$key'/){a=0;sub(/^[[:blank:]]*|[[:blank:]]*$/,"",$2);print $2}' \
-        $file)
+        "$file")
     echo "$value"
 }

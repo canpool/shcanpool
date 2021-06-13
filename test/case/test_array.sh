@@ -18,5 +18,5 @@ test_array() {
     array_extend a b
     ut_assert_eq "1 2 3 4 5 4 3" "$(array_all a)"
 
-    ut_assert_eq "1 2 3 4 5" "$(array_uniq a)"
+    ut_assert_eq "1\n2\n3\n4\n5" "$(array_uniq a)"
 }

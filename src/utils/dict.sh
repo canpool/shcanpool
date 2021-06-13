@@ -20,6 +20,11 @@ dict_add() {
     dict_set $@
 }
 
+# dict_remove dict key
+dict_remove() {
+    eval unset $1[$2]
+}
+
 # dict_set dict key value
 dict_set() {
     eval $1[$2]=$3

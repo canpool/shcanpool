@@ -4,21 +4,22 @@
 
 # method_def x y z ...
 method_def() {
-    for m in $@; do
-        if [ $(method_exists "$m") ]; then
-            echo "ERROR: method \"$m\" is exist"
+    for m in "$@"; do
+        if [ "$(method_exists "$m")" ]; then
+            echo "Error: method $m is exist"
         else
-            array_add __methods $m
+            array_add __methods "$m"
         fi
     done
 }
 
 # method_exists m
 method_exists() {
-    array_exists __methods $1
+    array_exists __methods "$1"
 }
 
 # method_all
 method_all() {
     array_all __methods
 }
+

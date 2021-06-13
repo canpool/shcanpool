@@ -51,8 +51,8 @@ ut_assert_raises() {
 
 # ut_assert_eq <expected> <actual>
 ut_assert_eq() {
-    local expected=$(echo -n $1)
-    local actual=$(echo -n $2)
+    local expected=$(echo -ne "$1")
+    local actual=$(echo -ne "$2")
     if [[ "X$expected" = "X$actual" ]]; then
         return
     fi
@@ -62,8 +62,8 @@ ut_assert_eq() {
 
 # ut_assert_ne <expected> <actual>
 ut_assert_ne() {
-    local expected=$(echo -n $1)
-    local actual=$(echo -n $2)
+    local expected=$(echo -ne "$1")
+    local actual=$(echo -ne "$2")
     if [[ "X$expected" != "X$actual" ]]; then
         return
     fi
@@ -77,30 +77,40 @@ printf "Usage: ut [options] [cases]
 A simple unit test framework
 
 Options:
-  -l, --list        List all test cases
-  -h, --help        Show this help message and exit
+    -a, --all       Run all test cases
+    -l, --list      List all test cases
+    -h, --help      Show this help message and exit
 "
 }
 
 ut_all() {
-    declare -F | sed 's/^declare -f\s*//g' | grep -E "^test_[a-zA-Z0-9_]+"
+    declare_functions | grep -E "^test_[a-zA-Z0-9_]+"
 }
 
 __ut_run() {
     # test cases
-    local tcs="$@"
-    [ -z "$tcs" ] && tcs=$(ut_all)
+    local tcs=""
+    if [ $# -gt 0 ]; then
+        tcs=$(get_list "$1")
+        shift 1
+    fi
 
+    if [ -z "$tcs" ]; then
+        tcs=$(ut_all)
+    fi
+
+    local __idx=1 # prevent conflict
     for tc in $tcs; do
-        echo "test $tc"
-        $tc
+        echo "$__idx) $tc $@"
+        $tc $@
+        ((__idx++))
     done
 }
 
 # ut_run [cases]
 #   Run all test_xxx or some special test_xxx
 ut_run() {
-    local ARGS=$(getopt -o "hl" -l "help,list" -n "ut" -- "$@")
+    local ARGS=$(getopt -o "hla" -l "help,list,all" -n "ut" -- "$@")
     eval set -- "${ARGS}"
 
     while true; do
@@ -111,11 +121,18 @@ ut_run() {
             -l|--list)
                 ut_all; exit
                 ;;
+            -a|--all)
+                __ut_run; exit
+                ;;
             --)
                 shift; break
                 ;;
         esac
     done
 
+    if [ $# -eq 0 ]; then
+        ut_usage; exit
+    fi
     __ut_run "$@"
 }
+

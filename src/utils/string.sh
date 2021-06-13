@@ -4,8 +4,7 @@
 
 # string_len str
 string_len() {
-    local length=$(echo "$1" | wc -c)
-    echo $(($length-1))
+    echo "${#1}"
 }
 
 alias string_size="string_len"
