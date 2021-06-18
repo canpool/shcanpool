@@ -4,12 +4,18 @@
 
 method_def init setting
 
-
-__config_file=""
+# get config file
+__config_file() {
+    local cf="$CONFIG_FILE"
+    if [ -z "$cf" ]; then
+        cf="$HOME/.$PROG.conf"
+    fi
+    echo "$cf"
+}
 
 # __setting_get section key
 __setting_get() {
-    local cf="$__config_file"
+    local cf="$(__config_file)"
     if [ -f "$cf" ]; then
         config_get "$cf" "$1" "$2"
     else
@@ -65,13 +71,8 @@ do_init() {
 # setting_init force
 setting_init() {
     local force="$1"
-    local cf="$CONFIG_FILE"
+    local cf="$(__config_file)"
     local tf="$SHCANPOOL_DIR/config/template.conf"
-
-    if [ -z "$cf" ]; then
-        cf="$HOME/.$PROG.conf"
-    fi
-    __config_file="$cf"
 
     if [[ "$force" = "1" || ! -e "$cf" ]]; then
         if [ -e "$tf" ]; then
@@ -99,7 +100,7 @@ alias_def setting set
 # do_setting
 do_setting() {
     local editor="vi"
-    local file="$__config_file"
+    local file="$(__config_file)"
 
     type vim &>/dev/null
     if [ $? -eq 0 ]; then
