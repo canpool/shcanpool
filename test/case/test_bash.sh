@@ -5,14 +5,14 @@
 # for testing, please ignore some failed asserts
 test_bash_inner_var() {
     ut_assert_eq "/usr/bin/bash" "$BASH"
-    ut_assert_eq "/usr/share/Modules/init/bash" "$BASH_ENV"
+    # ut_assert_eq "/usr/share/Modules/init/bash" "$BASH_ENV"
 
     local bash_version="${BASH_VERSINFO[0]}.${BASH_VERSINFO[1]}.${BASH_VERSINFO[2]}\
 (${BASH_VERSINFO[3]})-${BASH_VERSINFO[4]}"
     ut_assert_eq "$BASH_VERSION" "$bash_version"
 
     ut_assert_ne "" "$DIRSTACK"
-    ut_assert_eq "" "$EDITOR"
+    # ut_assert_eq "" "$EDITOR"
 
     ut_assert_eq "test_bash_inner_var" "$FUNCNAME"
     : echo "$LINENO"
