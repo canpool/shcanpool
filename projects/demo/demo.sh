@@ -2,9 +2,9 @@
 # Copyright (c) 2021 maminjie <canpool@163.com>
 # SPDX-License-Identifier: MulanPSL-2.0
 
-readonly CURRENT_DIR=$(dirname $(readlink -f "$0"))
+readonly PROJECT_DIR=$(dirname $(readlink -f "$0"))
 
-readonly SHCANPOOL_DIR="$CURRENT_DIR/../.."
+readonly SHCANPOOL_DIR="$PROJECT_DIR/../.."
 
 readonly PROG="demo"
 readonly DESC="Shell Command Framework."
@@ -19,7 +19,7 @@ load $SHCANPOOL_DIR/src/libs
 load $SHCANPOOL_DIR/src/plugins
 load $SHCANPOOL_DIR/src/apps
 
-load $CURRENT_DIR/apps
+load $PROJECT_DIR/apps
 
 main() {
     local subcmd=$1
