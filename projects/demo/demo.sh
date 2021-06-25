@@ -19,6 +19,7 @@ load $SHCANPOOL_DIR/src/libs
 load $SHCANPOOL_DIR/src/plugins
 load $SHCANPOOL_DIR/src/apps
 
+load $PROJECT_DIR/plugins
 load $PROJECT_DIR/apps
 
 main() {
