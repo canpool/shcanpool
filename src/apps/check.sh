@@ -24,7 +24,7 @@ check_all() {
     local checkers=$(declare_functions | grep -E "^[a-zA-Z0-9]+_docheck")
     for cker in $checkers; do
         $cker
-    done
+    done | sort -u
 }
 
 # check_command cmd
